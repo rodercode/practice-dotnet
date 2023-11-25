@@ -18,7 +18,7 @@ namespace pokeapi.Controllers;
             return Ok(new ApiResponse<List<Pokemon>>
             {
                 StatusCode = 200,
-                Message = "Success",
+                Message = "Retrieved list of pokemon successfully",
                 Data = pokemonService.getAll()
             });
         }
