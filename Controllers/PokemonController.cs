@@ -15,13 +15,11 @@ namespace pokeapi.Controllers;
         [HttpGet]
         public IActionResult GetAll()
         {
-            var response = new ApiResponse<List<Pokemon>>
+            return Ok(new ApiResponse<List<Pokemon>>
             {
                 StatusCode = 200,
                 Message = "Success",
                 Data = pokemonService.getAll()
-            };
-
-            return Ok(response);
+            });
         }
     }
