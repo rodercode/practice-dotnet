@@ -1,4 +1,5 @@
 
+using pokeapi.Models;
 using pokeapi.Repositories;
 
 namespace pokeapi.Services;
@@ -9,5 +10,10 @@ namespace pokeapi.Services;
         public PokemonService(IPokemonRepository pokemonRepository)
         {
             this.pokemonRepository = pokemonRepository;
-        }   
-    }
+        }
+
+        public List<Pokemon> getAll()
+        {
+            return pokemonRepository.getAll();
+        }
+}

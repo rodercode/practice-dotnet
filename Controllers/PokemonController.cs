@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using pokeapi.Models;
 using pokeapi.Services;
 
 namespace pokeapi.Controllers;
@@ -12,9 +13,15 @@ namespace pokeapi.Controllers;
             this.pokemonService = pokemonService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
-            return Ok("Hello World");
+            var response = new ApiResponse<List<Pokemon>>
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = pokemonService.getAll()
+            };
+
+            return Ok(response);
         }
-        
     }
