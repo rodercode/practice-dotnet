@@ -4,6 +4,7 @@ namespace pokeapi.Repositories
 {
     public interface IPokemonRepository
     {
-        List<Pokemon> getAll();        
+        List<Pokemon> getAll();     
+        Pokemon getById(int id);   
     }
 }

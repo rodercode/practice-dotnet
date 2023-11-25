@@ -13,4 +13,10 @@ public class PokemonRepository : IPokemonRepository
     {
         return context.Pokemons.ToList();
     }
+
+    public Pokemon getById(int id)
+    {
+        return context.Pokemons.Find(id);
+    }
+
 }

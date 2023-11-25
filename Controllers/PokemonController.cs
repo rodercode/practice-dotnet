@@ -22,4 +22,15 @@ namespace pokeapi.Controllers;
                 Data = pokemonService.getAll()
             });
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(new ApiResponse<Pokemon>
+            {
+                StatusCode = 200,
+                Message = "Retrieved pokemon by id successfully",
+                Data = pokemonService.getById(id)
+            });
+        }
     }

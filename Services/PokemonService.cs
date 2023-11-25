@@ -16,4 +16,10 @@ namespace pokeapi.Services;
         {
             return pokemonRepository.getAll();
         }
+
+        public Pokemon getById(int id)
+        {
+            return pokemonRepository.getById(id);
+        }
+
 }
