@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using pokeapi.Data;
 using pokeapi.Models;
 
@@ -16,7 +17,9 @@ public class PokemonRepository : IPokemonRepository
 
     public Pokemon? getById(int id)
     {
-        return context.Pokemons.Find(id);
+        return context.Pokemons
+        .Include(p => p.Types)
+        .FirstOrDefault(p => p.Id == id);
     }
 
 }
