@@ -2,7 +2,7 @@
 using pokeapi.Repositories;
 
 namespace pokeapi.Services;
-    public class PokemonService
+    public class PokemonService : IPokemonService
     {
         private readonly IPokemonRepository pokemonRepository;
 

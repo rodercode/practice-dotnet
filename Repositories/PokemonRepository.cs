@@ -1,5 +1,5 @@
 namespace pokeapi.Repositories;
-    public class PokemonRepository
+    public class PokemonRepository : IPokemonRepository
     {
         
     }
