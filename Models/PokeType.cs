@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace pokeapi.Models
-{
+namespace pokeapi.Models;
     public class PokeType
     {
         public int Id { get; set; }
@@ -14,4 +9,3 @@ namespace pokeapi.Models
         [JsonIgnore]
         public Pokemon Pokemon { get; set; }
     }
-}
