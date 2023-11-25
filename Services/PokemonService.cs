@@ -19,7 +19,10 @@ namespace pokeapi.Services;
 
         public Pokemon getById(int id)
         {
-            return pokemonRepository.getById(id);
-        }
+            var pokemon = pokemonRepository.getById(id);
+            if(pokemon == null)
+                throw new Exception("Pokemon not found");
 
+            return pokemon;            
+        }
 }
