@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pokeapi.Data;
 
@@ -10,9 +11,11 @@ using pokeapi.Data;
 namespace pokeapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231126125012_seed trainer data to trainers table")]
+    partial class seedtrainerdatatotrainerstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,32 +44,6 @@ namespace pokeapi.Migrations
                     b.HasIndex("PokemonId");
 
                     b.ToTable("Types");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Grass",
-                            PokemonId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Poison",
-                            PokemonId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Fire",
-                            PokemonId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Water",
-                            PokemonId = 3
-                        });
                 });
 
             modelBuilder.Entity("pokeapi.Models.Pokemon", b =>
