@@ -60,6 +60,34 @@ namespace pokeapi.Migrations
                     b.ToTable("Pokemons");
                 });
 
+            modelBuilder.Entity("pokeapi.Models.Trainer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Trainers");
+                });
+
             modelBuilder.Entity("pokeapi.Models.PokeType", b =>
                 {
                     b.HasOne("pokeapi.Models.Pokemon", "Pokemon")

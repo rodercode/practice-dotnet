@@ -8,6 +8,7 @@ namespace pokeapi.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) {}
 
         public DbSet<Pokemon> Pokemons { get; set; }
-        public DbSet<PokeType> Types { get; set; }        
+        public DbSet<PokeType> Types { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
     }
 }
