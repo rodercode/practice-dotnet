@@ -40,7 +40,7 @@ namespace pokeapi.Migrations
 
                     b.HasIndex("PokemonId");
 
-                    b.ToTable("Types");
+                    b.ToTable("Types", (string)null);
 
                     b.HasData(
                         new
@@ -83,7 +83,7 @@ namespace pokeapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pokemons");
+                    b.ToTable("Pokemons", (string)null);
 
                     b.HasData(
                         new
@@ -128,7 +128,7 @@ namespace pokeapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers");
+                    b.ToTable("Trainers", (string)null);
 
                     b.HasData(
                         new
