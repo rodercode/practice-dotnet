@@ -10,16 +10,26 @@ public class PokemonRepository : IPokemonRepository
     {
         this.context = context;
     }
-    public List<Pokemon> getAll()
+    public List<Pokemon> GetAll(string? filterOn = null, string? filterQuery = null)
     {
-        return context.Pokemons.ToList();
-    }
+        var pokemons = context.Pokemons.
+        Include(p => p.Types).
+        AsQueryable();
 
-    public Pokemon? getById(int id)
+        // Filtering
+        if(string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+        {
+            if(filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+            {
+                pokemons = pokemons.Where(p => p.Name.Contains(filterQuery));
+            }
+        }
+        return pokemons.ToList();
+    }
+    public Pokemon? GetById(int id)
     {
         return context.Pokemons
-        .Include(p => p.Types)
-        .FirstOrDefault(p => p.Id == id);
+            .Include(p => p.Types)
+            .FirstOrDefault(p => p.Id == id);            
     }
-
 }

@@ -21,6 +21,38 @@ namespace pokeapi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PokeTypePokemon", b =>
+                {
+                    b.Property<int>("PokemonsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PokemonsId", "TypesId");
+
+                    b.HasIndex("TypesId");
+
+                    b.ToTable("PokeTypePokemon");
+                });
+
+            modelBuilder.Entity("pokeapi.Models.Domain.City", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("pokeapi.Models.PokeType", b =>
                 {
                     b.Property<int>("Id")
@@ -33,40 +65,9 @@ namespace pokeapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PokemonId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonId");
-
-                    b.ToTable("Types", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Grass",
-                            PokemonId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Poison",
-                            PokemonId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Fire",
-                            PokemonId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Water",
-                            PokemonId = 3
-                        });
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("pokeapi.Models.Pokemon", b =>
@@ -77,92 +78,34 @@ namespace pokeapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Pokemons", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Bulbasaur"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Charmander"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Squirtle"
-                        });
-                });
-
-            modelBuilder.Entity("pokeapi.Models.Trainer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Age = 23,
-                            FirstName = "Marcus",
-                            Gender = "Male",
-                            LastName = "Groth"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Age = 40,
-                            FirstName = "Holly",
-                            Gender = "Female",
-                            LastName = "Branson"
-                        });
+                    b.ToTable("Pokemons");
                 });
 
-            modelBuilder.Entity("pokeapi.Models.PokeType", b =>
+            modelBuilder.Entity("PokeTypePokemon", b =>
                 {
-                    b.HasOne("pokeapi.Models.Pokemon", "Pokemon")
-                        .WithMany("Types")
-                        .HasForeignKey("PokemonId")
+                    b.HasOne("pokeapi.Models.Pokemon", null)
+                        .WithMany()
+                        .HasForeignKey("PokemonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Pokemon");
-                });
-
-            modelBuilder.Entity("pokeapi.Models.Pokemon", b =>
-                {
-                    b.Navigation("Types");
+                    b.HasOne("pokeapi.Models.PokeType", null)
+                        .WithMany()
+                        .HasForeignKey("TypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

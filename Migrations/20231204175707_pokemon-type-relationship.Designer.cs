@@ -11,8 +11,8 @@ using pokeapi.Data;
 namespace pokeapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231126111148_generate trainer table")]
-    partial class generatetrainertable
+    [Migration("20231204175707_pokemon-type-relationship")]
+    partial class pokemontyperelationship
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace pokeapi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PokeTypePokemon", b =>
+                {
+                    b.Property<int>("PokemonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PokemonId", "TypeId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("PokeTypePokemon");
+                });
 
             modelBuilder.Entity("pokeapi.Models.PokeType", b =>
                 {
@@ -36,12 +51,7 @@ namespace pokeapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PokemonId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PokemonId");
 
                     b.ToTable("Types");
                 });
@@ -63,48 +73,19 @@ namespace pokeapi.Migrations
                     b.ToTable("Pokemons");
                 });
 
-            modelBuilder.Entity("pokeapi.Models.Trainer", b =>
+            modelBuilder.Entity("PokeTypePokemon", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trainers");
-                });
-
-            modelBuilder.Entity("pokeapi.Models.PokeType", b =>
-                {
-                    b.HasOne("pokeapi.Models.Pokemon", "Pokemon")
-                        .WithMany("Types")
+                    b.HasOne("pokeapi.Models.Pokemon", null)
+                        .WithMany()
                         .HasForeignKey("PokemonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Pokemon");
-                });
-
-            modelBuilder.Entity("pokeapi.Models.Pokemon", b =>
-                {
-                    b.Navigation("Types");
+                    b.HasOne("pokeapi.Models.PokeType", null)
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

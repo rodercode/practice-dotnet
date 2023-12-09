@@ -1,4 +1,6 @@
 
+using AutoMapper;
+using pokeapi.Dto;
 using pokeapi.Models;
 using pokeapi.Repositories;
 
@@ -6,23 +8,27 @@ namespace pokeapi.Services;
     public class PokemonService : IPokemonService
     {
         private readonly IPokemonRepository pokemonRepository;
+        private readonly IMapper mapper;
 
-        public PokemonService(IPokemonRepository pokemonRepository)
+        public PokemonService(IPokemonRepository pokemonRepository, IMapper mapper)
         {
             this.pokemonRepository = pokemonRepository;
+            this.mapper = mapper;
         }
 
-        public List<Pokemon> getAll()
+        public List<PokemonDto> GetAll(string? filterOn, string? filterQuery)
         {
-            return pokemonRepository.getAll();
+            List<Pokemon> pokemonsDomain = pokemonRepository.GetAll(filterOn, filterQuery);
+            return mapper.Map<List<PokemonDto>>(pokemonsDomain);
         }
 
-        public Pokemon getById(int id)
+        public PokemonDto GetById(int id)
         {
-            var pokemon = pokemonRepository.getById(id);
-            if(pokemon == null)
+            Pokemon? pokemonDomain = pokemonRepository.GetById(id);
+            if(pokemonDomain == null)
+            {
                 throw new Exception("Pokemon not found");
-
-            return pokemon;            
+            }
+            return mapper.Map<PokemonDto>(pokemonDomain);
         }
 }
